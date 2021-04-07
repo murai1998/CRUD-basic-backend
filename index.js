@@ -1,17 +1,18 @@
 const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
-const PORT = 3000 || process.env.PORT
+const PORT = 5000 || process.env.PORT
 const app = express();
 app.enable("trust proxy");
-const mysql = require('mysql');
-const path = require("path")
-const router = require("./router/router.js")
-app.use(express.static(path.join(__dirname, "client")));
-const path1 = __dirname + "/client/";
-app.get("/", function(req, res) {
-  res.sendFile(path + "index.html");
-});
+const router = require("./app/routes/turorial.routes")
+// const mysql = require('mysql');
+// const path = require("path")
+// const router = require("./router/router.js")
+// app.use(express.static(path.join(__dirname, "client")));
+// const path1 = __dirname + "/client/";
+// app.get("/", function(req, res) {
+//   res.sendFile(path + "index.html");
+// });
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors())
@@ -185,7 +186,8 @@ app.get("/", (req, res) => {
 const db = require("./app/models");
 db.sequelize.sync();
 // app.use('/', router)
-require("./app/routes/turorial.routes")(app);
+
+app.use('/api/tutorials', router);
 app.listen(PORT, ()=>{
   console.log(`Working on a port ${PORT}`)
 })
