@@ -187,7 +187,7 @@ const db = require("./app/models");
 db.sequelize.sync();
 // app.use('/', router)
 
-app.use('/api/tutorials', router);
+app.use('/api', router);
 app.listen(PORT, ()=>{
   console.log(`Working on a port ${PORT}`)
 })

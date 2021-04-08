@@ -3,27 +3,24 @@
     var router = require("express").Router();
 
   
-    // Create a new Tutorial
-    router.post("/", tutorials.create);
-  
-    // Retrieve all Tutorials
-    router.get("/", tutorials.findAll);
-  
-    // Retrieve all published Tutorials
-    router.get("/published", tutorials.findAllPublished);
-  
-    // Retrieve a single Tutorial with id
-    router.get("/:id", tutorials.findOne);
-  
-    // Update a Tutorial with id
-    router.put("/:id", tutorials.update);
-  
-    // Delete a Tutorial with id
-    router.delete("/:id", tutorials.delete);
-  
-    // Delete all Tutorials
-    router.delete("/", tutorials.deleteAll);
-  
- 
+//===============PLANS======================
+    router.post("/plans", tutorials.create);
+    router.get("/plans", tutorials.findAll);
+    router.get("/published-plans", tutorials.findAllPublished);
+    router.get("/plans/:id", tutorials.findOne);
+    router.put("/plans/:id", tutorials.update);
+    router.delete("/plans/:id", tutorials.delete);
+    router.delete("/plans", tutorials.deleteAll);
+//==============================================
+
+
+//=================GOALS==================
+router.post("/goals", tutorials.createGoal);
+router.get("/goals", tutorials.findAllGoals);
+router.get("/published-goals", tutorials.findAllPublishedGoals);
+router.get("/goals/:id", tutorials.findOneGoal);
+router.put("/goals/:id", tutorials.updateGoal);
+router.delete("/goals/:id", tutorials.deleteGoal);
+router.delete("/goals", tutorials.deleteAllGoals);
 
     module.exports = router;

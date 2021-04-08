@@ -1,39 +1,69 @@
 import axios from 'axios';
+let baseURL = ""
 process.env.NODE_ENV === "production"
-  ? (baseURL = "")
+  ? (baseURL = "http://localhost:5000")
   : (baseURL = "http://localhost:5000");
 
-console.log(process.env, baseURL);
+
 const service = axios.create({baseURL})
 const actions = {
-    getAll: async() =>{
-        return await service.get('"/tutorials"')
+    getAllPlans: async() =>{
+        return await service.get("/api/plans")
     
     },
 
-   get: async (id) => {
-    return await service.get(`/tutorials/${id}`);
+   getPlan: async (id) => {
+    return await service.get(`/api/plans/${id}`);
   },
   
-  create: async(data)  => {
-    return await service.post("/tutorials", data);
+  createPlan: async(data)  => {
+    return await service.post("/api/plans", data);
   },
   
-   update: async(id, data) => {
-    return await service.put(`/tutorials/${id}`, data);
+   updatePlan: async(id, data) => {
+    return await service.put(`/api/plans/${id}`, data);
   },
   
-  remove: async (id) => {
-    return await service.delete(`/tutorials/${id}`);
+  removePlan: async (id) => {
+    return await service.delete(`/api/plans/${id}`);
   },
   
-  removeAll: async () => {
-    return await service.delete(`/tutorials`);
+  removeAllPlans: async () => {
+    return await service.delete(`/api/plans`);
   },
   
-  findByTitle: async (title) => {
-    return await service.get(`/tutorials?title=${title}`);
-  }
+  findByTitlePlans: async (title) => {
+    return await service.get(`/api/plans?title=${title}`);
+  },
+//================GOALS====================
+getAllGoals: async() =>{
+  return await service.get("/api/goals")
+
+},
+
+getGoal: async (id) => {
+return await service.get(`/api/goals/${id}`);
+},
+
+createGoal: async(data)  => {
+return await service.post("/api/Goals", data);
+},
+
+updateGoal: async(id, data) => {
+return await service.put(`/api/goals/${id}`, data);
+},
+
+removeGoal: async (id) => {
+return await service.delete(`/api/plans/${id}`);
+},
+
+removeAllPlans: async () => {
+return await service.delete(`/api/plans`);
+},
+
+findByTitlePlans: async (title) => {
+return await service.get(`/api/plans?title=${title}`);
+}
 }
 
 export default actions;
