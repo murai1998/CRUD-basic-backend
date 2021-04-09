@@ -46,7 +46,7 @@ return await service.get(`/api/goals/${id}`);
 },
 
 createGoal: async(data)  => {
-return await service.post("/api/Goals", data);
+return await service.post("/api/goals", data);
 },
 
 updateGoal: async(id, data) => {
@@ -63,6 +63,36 @@ return await service.delete(`/api/plans`);
 
 findByTitlePlans: async (title) => {
 return await service.get(`/api/plans?title=${title}`);
+},
+
+//================GOALS====================
+getAllDreams: async() =>{
+  return await service.get("/api/dreams")
+
+},
+
+getDream: async (id) => {
+return await service.get(`/api/dreams/${id}`);
+},
+
+createDream: async(data)  => {
+return await service.post("/api/dreams", data);
+},
+
+updateDream: async(id, data) => {
+return await service.put(`/api/dreams/${id}`, data);
+},
+
+removeDream: async (id) => {
+return await service.delete(`/api/dreams/${id}`);
+},
+
+removeAllDreams: async () => {
+return await service.delete(`/api/dreams`);
+},
+
+findByTitleDreams: async (title) => {
+return await service.get(`/api/dreams?title=${title}`);
 }
 }
 

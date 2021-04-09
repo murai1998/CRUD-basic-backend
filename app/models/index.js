@@ -20,4 +20,5 @@ db.sequelize = sequelize;
 
 db.tutorials = require("./tutorial.model.js")(sequelize, Sequelize);
 db.goals = require("./goals.model.js")(sequelize, Sequelize);
+db.dreams = require("./dreams.model.js")(sequelize, Sequelize);
 module.exports = db;

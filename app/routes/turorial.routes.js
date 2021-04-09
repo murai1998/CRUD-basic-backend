@@ -23,4 +23,13 @@ router.put("/goals/:id", tutorials.updateGoal);
 router.delete("/goals/:id", tutorials.deleteGoal);
 router.delete("/goals", tutorials.deleteAllGoals);
 
+//=================DREAMS==================
+router.post("/dreams", tutorials.createDreams);
+router.get("/dreams", tutorials.findAllDreams);
+router.get("/published-dreams", tutorials.findAllPublishedDreams);
+router.get("/dreams/:id", tutorials.findOneDream);
+router.put("/dreams/:id", tutorials.updateDreams);
+router.delete("/dreams/:id", tutorials.deleteDreams);
+router.delete("/dreams", tutorials.deleteAllDreams);
+
     module.exports = router;
