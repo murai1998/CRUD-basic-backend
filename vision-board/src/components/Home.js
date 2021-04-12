@@ -40,7 +40,8 @@ export default function TransferList() {
   const [right, setGoals] = React.useState([]);
   const [middle, setDreams] = React.useState([])
   const [newLeft, setNewLeft] = React.useState('')
-
+  const [newRight, setNewRight] = React.useState('')
+  const [newMiddle, setNewMiddle] = React.useState('')
 useEffect(()=>{
     const fetchData = async()=>{
         try{
@@ -111,22 +112,34 @@ useEffect(()=>{
             ids.push(x.id)
         })
         console.log(ids.join(','))
-        let result = await actions.removePlan(ids.join(','));
+        let result = await actions.removeGoal(ids.join(','));
         console.log('delete', result)
-        setGoals(not(left, rightChecked));
-        setChecked(not(checked, leftChecked));
+        setGoals(not(right, rightChecked));
+        setChecked(not(checked, rightChecked));
     }
     }catch(err){
         console.log(err)
     }
   };
-  const deleteCheckedRight = () => {
-    setGoals(not(right, rightChecked));
-    setChecked(not(checked, rightChecked));
-  };
-  const deleteCheckedMiddle = () => {
-    setDreams(not(middle, middleChecked));
-    setChecked(not(checked, middleChecked));
+
+  const deleteCheckedMiddle = async(e) => {
+    try{
+      e.preventDefault();
+      console.log("Here3")
+      let ids = [];
+      if(middleChecked.length > 0){
+        middleChecked.map(x=>{
+          ids.push(x.id)
+      })
+      console.log(ids.join(','))
+      let result = await actions.removeDream(ids.join(','));
+      console.log('delete', result)
+      setDreams(not(middle, middleChecked));
+      setChecked(not(checked, middleChecked));
+  }
+  }catch(err){
+      console.log(err)
+  }
   };
   const handleCheckedLeft = () => {
     setPlans(left.concat(rightChecked));
@@ -165,7 +178,12 @@ const addNewItem =(e) =>{
     setNewLeft(e.target.value)
 
 }
-
+const addNewItemR =(e) =>{
+  setNewRight(e.target.value)
+}
+const addNewItemM =(e) =>{
+  setNewMiddle(e.target.value)
+}
 const handleSubmitTextL = async()=>{
 
 let obj = {description: newLeft}
@@ -175,6 +193,26 @@ let newItem = await actions.createPlan({description: newLeft})
 setPlans([...setPlans, {description: newLeft}])
 
 }
+
+const handleSubmitTextR = async()=>{
+
+  let obj = {description: newRight}
+  console.log(obj)
+  setNewRight('')
+  let newItem = await actions.createGoal({description: newRight})
+  setGoals([...setGoals, {description: newRight}])
+  
+  }
+
+  const handleSubmitTextM = async()=>{
+
+    let obj = {description: newMiddle}
+    console.log(obj)
+    setNewMiddle('')
+    let newItem = await actions.createDream({description: newMiddle})
+    setDreams([...setDreams, {description: newMiddle}])
+    
+    }
 
   const customList = (items) => (
     <Paper className={classes.paper}>
@@ -211,6 +249,7 @@ setPlans([...setPlans, {description: newLeft}])
 </form>
       <Button onClick={deleteCheckedLeft}>delete</Button>
       <Grid item>
+ 
         <Grid container direction="column" alignItems="center">
           <Button
             variant="outlined"
@@ -255,6 +294,12 @@ setPlans([...setPlans, {description: newLeft}])
         </Grid>
       </Grid>
       <Grid item>{customList(right)}</Grid>
+      <form className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmitTextR}>
+  <TextField onChange={addNewItemR} id="standard-basic" label="Standard" />
+  <Button type="submit">
+                    Submit
+                    </Button>
+</form>
       <Button onClick={deleteCheckedRight}>delete</Button>
    
       <Grid item>
@@ -302,6 +347,12 @@ setPlans([...setPlans, {description: newLeft}])
         </Grid>
       </Grid>
       <Grid item>{customList(middle)}</Grid>
+      <form className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmitTextM}>
+  <TextField onChange={addNewItemM} id="standard-basic" label="Standard" />
+  <Button type="submit">
+                    Submit
+                    </Button>
+</form>
       <Button onClick={deleteCheckedMiddle}>delete</Button>
     </Grid>
   );

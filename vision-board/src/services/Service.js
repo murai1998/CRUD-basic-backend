@@ -75,8 +75,8 @@ updateDream: async(id, data) => {
 return await service.put(`/api/dreams/${id}`, data);
 },
 
-removeDream: async (id) => {
-return await service.delete(`/api/dreams/${id}`);
+removeDream: async (ids) => {
+  return await service.delete(`/api/dreams/delete/${ids}`);
 },
  
 
