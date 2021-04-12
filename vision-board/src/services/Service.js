@@ -24,12 +24,8 @@ const actions = {
     return await service.put(`/api/plans/${id}`, data);
   },
   
-  removePlan: async (id) => {
-    return await service.delete(`/api/plans/${id}`);
-  },
-  
-  removeAllPlans: async () => {
-    return await service.delete(`/api/plans`);
+  removePlan: async (ids) => {
+    return await service.delete(`/api/plans/delete/${ids}`);
   },
   
   findByTitlePlans: async (title) => {
@@ -53,12 +49,8 @@ updateGoal: async(id, data) => {
 return await service.put(`/api/goals/${id}`, data);
 },
 
-removeGoal: async (id) => {
-return await service.delete(`/api/plans/${id}`);
-},
-
-removeAllPlans: async () => {
-return await service.delete(`/api/plans`);
+removeGoal: async (ids) => {
+  return await service.delete(`/api/goals/delete/${ids}`);
 },
 
 findByTitlePlans: async (title) => {
@@ -86,10 +78,7 @@ return await service.put(`/api/dreams/${id}`, data);
 removeDream: async (id) => {
 return await service.delete(`/api/dreams/${id}`);
 },
-
-removeAllDreams: async () => {
-return await service.delete(`/api/dreams`);
-},
+ 
 
 findByTitleDreams: async (title) => {
 return await service.get(`/api/dreams?title=${title}`);

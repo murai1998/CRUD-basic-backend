@@ -89,44 +89,31 @@ exports.createGoal = (req, res) => {
   };
 
   exports.deleteGoal = (req, res) => {
-    const id = req.params.id;
-  
-    Goals.destroy({
-      where: { id: id }
+    const ids = req.params.ids;
+let ids_arr = ids.split(',')
+  console.log("IDSSSS", req.params)
+  Goals.destroy({
+      where: { id: ids_arr }
     })
       .then(num => {
         if (num == 1) {
           res.send({
-            message: "Tutorial was deleted successfully!"
+            message: ids
           });
         } else {
           res.send({
-            message: `Cannot delete Tutorial with id=${id}. Maybe Tutorial was not found!`
+            message: `Cannot delete Tutorial with id=${ids}. Maybe Tutorial was not found!`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Could not delete Tutorial with id=" + id
+          message: "Could not delete Tutorial with id=" + ids
         });
       });
   };
 
-  exports.deleteAllGoals = (req, res) => {
-    Goals.destroy({
-      where: {},
-      truncate: false
-    })
-      .then(nums => {
-        res.send({ message: `${nums} Tutorials were deleted successfully!` });
-      })
-      .catch(err => {
-        res.status(500).send({
-          message:
-            err.message || "Some error occurred while removing all tutorials."
-        });
-      });
-  };
+
 
   exports.findAllPublishedGoals = (req, res) => {
     Goals.findAll({ where: { published: true } })
@@ -230,44 +217,31 @@ exports.createGoal = (req, res) => {
    };
  
    exports.delete = (req, res) => {
-     const id = req.params.id;
-   
+     const ids = req.params.ids;
+let ids_arr = ids.split(',')
+   console.log("IDSSSS", req.params)
      Tutorial.destroy({
-       where: { id: id }
+       where: { id: ids_arr }
      })
        .then(num => {
          if (num == 1) {
            res.send({
-             message: "Tutorial was deleted successfully!"
+             message: ids
            });
          } else {
            res.send({
-             message: `Cannot delete Tutorial with id=${id}. Maybe Tutorial was not found!`
+             message: `Cannot delete Tutorial with id=${ids}. Maybe Tutorial was not found!`
            });
          }
        })
        .catch(err => {
          res.status(500).send({
-           message: "Could not delete Tutorial with id=" + id
+           message: "Could not delete Tutorial with id=" + ids
          });
        });
    };
  
-   exports.deleteAll = (req, res) => {
-     Tutorial.destroy({
-       where: {},
-       truncate: false
-     })
-       .then(nums => {
-         res.send({ message: `${nums} Tutorials were deleted successfully!` });
-       })
-       .catch(err => {
-         res.status(500).send({
-           message:
-             err.message || "Some error occurred while removing all tutorials."
-         });
-       });
-   };
+ 
  
    exports.findAllPublished = (req, res) => {
      Tutorial.findAll({ where: { published: true } })
@@ -370,45 +344,31 @@ exports.createGoal = (req, res) => {
        });
    };
  
-   exports.deleteDreams = (req, res) => {
-     const id = req.params.id;
-   
-     Dreams.destroy({
-       where: { id: id }
-     })
-       .then(num => {
-         if (num == 1) {
-           res.send({
-             message: "Tutorial was deleted successfully!"
-           });
-         } else {
-           res.send({
-             message: `Cannot delete Tutorial with id=${id}. Maybe Tutorial was not found!`
-           });
-         }
-       })
-       .catch(err => {
-         res.status(500).send({
-           message: "Could not delete Tutorial with id=" + id
-         });
-       });
-   };
- 
-   exports.deleteAllDreams = (req, res) => {
-     Dreams.destroy({
-       where: {},
-       truncate: false
-     })
-       .then(nums => {
-         res.send({ message: `${nums} Tutorials were deleted successfully!` });
-       })
-       .catch(err => {
-         res.status(500).send({
-           message:
-             err.message || "Some error occurred while removing all tutorials."
-         });
-       });
-   };
+   exports.deleteDream = (req, res) => {
+    const ids = req.params.ids;
+let ids_arr = ids.split(',')
+  console.log("IDSSSS", req.params)
+    Dreams.destroy({
+      where: { id: ids_arr }
+    })
+      .then(num => {
+        if (num == 1) {
+          res.send({
+            message: ids
+          });
+        } else {
+          res.send({
+            message: `Cannot delete Tutorial with id=${ids}. Maybe Tutorial was not found!`
+          });
+        }
+      })
+      .catch(err => {
+        res.status(500).send({
+          message: "Could not delete Tutorial with id=" + ids
+        });
+      });
+  };
+
  
    exports.findAllPublishedDreams = (req, res) => {
      Dreams.findAll({ where: { published: true } })
