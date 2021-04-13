@@ -15,12 +15,13 @@
 
 //=================GOALS==================
 router.post("/goals", tutorials.createGoal);
+router.post("/goals-all", tutorials.createGoals);
 router.get("/goals", tutorials.findAllGoals);
 router.get("/published-goals", tutorials.findAllPublishedGoals);
 router.get("/goals/:id", tutorials.findOneGoal);
 router.put("/goals/:id", tutorials.updateGoal);
 router.delete("/goals/delete/:ids", tutorials.deleteGoal);
-
+router.delete("/g-delete/all", tutorials.deleteGoalsAll);
 
 //=================DREAMS==================
 router.post("/dreams", tutorials.createDreams);

@@ -44,7 +44,9 @@ return await service.get(`/api/goals/${id}`);
 createGoal: async(data)  => {
 return await service.post("/api/goals", data);
 },
-
+createGoals: async(data)  => {
+  return await service.post("/api/goals-all", data);
+  },
 updateGoal: async(id, data) => {
 return await service.put(`/api/goals/${id}`, data);
 },
@@ -52,7 +54,9 @@ return await service.put(`/api/goals/${id}`, data);
 removeGoal: async (ids) => {
   return await service.delete(`/api/goals/delete/${ids}`);
 },
-
+deleteGoalsAll: async () => {
+  return await service.delete(`api/g-delete/all`);
+},
 findByTitlePlans: async (title) => {
 return await service.get(`/api/plans?title=${title}`);
 },

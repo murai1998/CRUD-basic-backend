@@ -10,14 +10,17 @@ import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import actions from '../services/Service.js'
 import { TextField } from '@material-ui/core';
-
+import Tooltip from "@material-ui/core/Tooltip";
+import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlineOutlined";
+import IconButton from "@material-ui/core/IconButton";
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 const useStyles = makeStyles((theme) => ({
   root: {
     margin: 'auto',
   },
   paper: {
-    width: 200,
-    height: 230,
+    width: 260,
+    height: 400,
     overflow: 'auto',
   },
   button: {
@@ -42,6 +45,9 @@ export default function TransferList() {
   const [newLeft, setNewLeft] = React.useState('')
   const [newRight, setNewRight] = React.useState('')
   const [newMiddle, setNewMiddle] = React.useState('')
+  const [showL, setShowL] = React.useState(false)
+  const [showR, setShowR] = React.useState(false)
+  const [showM, setShowM] = React.useState(false)
 useEffect(()=>{
     const fetchData = async()=>{
         try{
@@ -73,9 +79,16 @@ useEffect(()=>{
     setChecked(newChecked);
   };
 
-  const handleAllRight = () => {
+  const handleAllRight = async() => {
+    try{
     setGoals(right.concat(left));
+    // let res = await actions.createGoals(left)
     setPlans([]);
+    let res2 = await actions.deletePlansAll()
+    console.log(res2)
+    } catch(err){
+      console.log(err)
+    }
   };
 
   const handleCheckedRight = () => {
@@ -122,6 +135,15 @@ useEffect(()=>{
     }
   };
 
+  const addNewItemL2 = async(e)=>{
+    setShowL(!showL)
+  }
+  const addNewItemR2 = async(e)=>{
+    setShowR(!showR)
+  }
+  const addNewItemM2 = async(e)=>{
+    setShowM(!showM)
+  }
   const deleteCheckedMiddle = async(e) => {
     try{
       e.preventDefault();
@@ -181,6 +203,7 @@ const addNewItem =(e) =>{
 const addNewItemR =(e) =>{
   setNewRight(e.target.value)
 }
+
 const addNewItemM =(e) =>{
   setNewMiddle(e.target.value)
 }
@@ -214,8 +237,9 @@ const handleSubmitTextR = async()=>{
     
     }
 
-  const customList = (items) => (
-    <Paper className={classes.paper}>
+  const customList = (items, deleteCheckedMiddle, addNewI) => (
+    <div>
+  <Paper className={classes.paper}>
       <List dense component="div" role="list">
         {items.map((value) => {
           const labelId = `transfer-list-item-${value}-label`;
@@ -236,18 +260,31 @@ const handleSubmitTextR = async()=>{
         <ListItem />
       </List>
     </Paper>
+    <Paper>   <Tooltip title="Delete Items">
+            <IconButton>
+              <DeleteOutlineOutlinedIcon onClick={deleteCheckedMiddle}/>
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Add a new item">
+            <IconButton>
+               <AddCircleOutlineIcon onClick={addNewI}/>
+            </IconButton>
+          </Tooltip>
+         
+          </Paper>
+    </div>
   );
 
   return (
     <Grid container spacing={2} justify="center" alignItems="center" className={classes.root}>
-      <Grid item>{customList(left)}</Grid>
-      <form className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmitTextL}>
+      <Grid item>{customList(left, deleteCheckedLeft, addNewItemL2)}</Grid>
+     {showL ? <form className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmitTextL}>
   <TextField onChange={addNewItem} id="standard-basic" label="Standard" />
   <Button type="submit">
                     Submit
                     </Button>
-</form>
-      <Button onClick={deleteCheckedLeft}>delete</Button>
+</form> :('')}
+    
       <Grid item>
  
         <Grid container direction="column" alignItems="center">
@@ -293,14 +330,16 @@ const handleSubmitTextR = async()=>{
           </Button>
         </Grid>
       </Grid>
-      <Grid item>{customList(right)}</Grid>
-      <form className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmitTextR}>
+      <Grid item>{customList(right, deleteCheckedRight, addNewItemR2)}</Grid>
+      {showR ? <form className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmitTextR}>
   <TextField onChange={addNewItemR} id="standard-basic" label="Standard" />
   <Button type="submit">
                     Submit
                     </Button>
-</form>
-      <Button onClick={deleteCheckedRight}>delete</Button>
+</form> :(
+  ''
+)}
+      
    
       <Grid item>
         <Grid container direction="column" alignItems="center">
@@ -345,15 +384,15 @@ const handleSubmitTextR = async()=>{
             ≪
           </Button>
         </Grid>
+    
       </Grid>
-      <Grid item>{customList(middle)}</Grid>
-      <form className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmitTextM}>
+      <Grid item>{customList(middle, deleteCheckedMiddle, addNewItemM2)}</Grid>
+      {showM ? <form className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmitTextM}>
   <TextField onChange={addNewItemM} id="standard-basic" label="Standard" />
   <Button type="submit">
                     Submit
                     </Button>
-</form>
-      <Button onClick={deleteCheckedMiddle}>delete</Button>
+</form> : ''}
     </Grid>
   );
 }

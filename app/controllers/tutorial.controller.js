@@ -33,6 +33,33 @@ exports.createGoal = (req, res) => {
       });
   };
 
+  exports.createGoals = (req, res) => {
+    console.log(req.body)
+     if (!req.body.length > 0) {
+       res.status(400).send({
+         message: "Content can not be empty!"
+       });
+       return;
+     }
+   let arr = []
+    req.body.forEach(x =>{
+      arr.push({description: x.description,
+        published: x.published ? x.published : false})
+    })
+  
+   
+     // Save Tutorial in the database
+     Goals.bulkCreate(arr)
+       .then(data => {
+         res.send(data);
+       })
+       .catch(err => {
+         res.status(500).send({
+           message:
+             err.message || "Some error occurred while creating the Tutorial."
+         });
+       });
+   };
   exports.findAllGoals = (req, res) => {
     const description = req.query.description;
     var condition = description ? { title: { [Op.like]: `%${description}%` } } : null;
@@ -112,7 +139,28 @@ let ids_arr = ids.split(',')
         });
       });
   };
-
+  exports.deleteGoalsAll = (req, res) => {
+    console.log("here")
+  Goals.destroy({
+      where: { }
+    })
+      .then(num => {
+        if (num == 1) {
+          res.send({
+            message: 'Deleted!'
+          });
+        } else {
+          res.send({
+            message: `Cannot delete Tutorial. Maybe Tutorial was not found!`
+          });
+        }
+      })
+      .catch(err => {
+        res.status(500).send({
+          message: "Could not delete Tutorial" 
+        });
+      });
+  };
 
 
   exports.findAllPublishedGoals = (req, res) => {
@@ -219,7 +267,7 @@ let ids_arr = ids.split(',')
    exports.delete = (req, res) => {
      const ids = req.params.ids;
 let ids_arr = ids.split(',')
-   console.log("IDSSSS", req.params)
+   console.log("IDSSSS2", req.params)
      Tutorial.destroy({
        where: { id: ids_arr }
      })
@@ -256,6 +304,28 @@ let ids_arr = ids.split(',')
        });
    };
 
+   exports.deletePlansAll = (req, res) => {
+    console.log("here")
+    Tutorial.destroy({
+      where: { }
+    })
+      .then(num => {
+        if (num == 1) {
+          res.send({
+            message: 'Deleted!'
+          });
+        } else {
+          res.send({
+            message: `Cannot delete Tutorial. Maybe Tutorial was not found!`
+          });
+        }
+      })
+      .catch(err => {
+        res.status(500).send({
+          message: "Could not delete Tutorial" 
+        });
+      });
+  };
 
 
 
@@ -347,7 +417,7 @@ let ids_arr = ids.split(',')
    exports.deleteDream = (req, res) => {
     const ids = req.params.ids;
 let ids_arr = ids.split(',')
-  console.log("IDSSSS", req.params)
+  console.log("IDSSSS3", req.params)
     Dreams.destroy({
       where: { id: ids_arr }
     })
