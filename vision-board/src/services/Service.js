@@ -82,11 +82,16 @@ return await service.put(`/api/dreams/${id}`, data);
 removeDream: async (ids) => {
   return await service.delete(`/api/dreams/delete/${ids}`);
 },
- 
-
+deletePlansAll: async () => {
+  return await service.delete(`api/p-delete/all`);
+},
+createDreams: async(data)  => {
+  return await service.post("/api/dreams-all", data);
+  },
 findByTitleDreams: async (title) => {
 return await service.get(`/api/dreams?title=${title}`);
 }
+
 }
 
 export default actions;

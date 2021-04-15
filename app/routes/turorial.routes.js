@@ -10,6 +10,7 @@
     router.get("/plans/:id", tutorials.findOne);
     router.put("/plans/:id", tutorials.update);
     router.delete("/plans/delete/:ids", tutorials.delete);
+    router.delete("/p-delete/all", tutorials.deletePlansAll);
 //==============================================
 
 
@@ -24,12 +25,13 @@ router.delete("/goals/delete/:ids", tutorials.deleteGoal);
 router.delete("/g-delete/all", tutorials.deleteGoalsAll);
 
 //=================DREAMS==================
-router.post("/dreams", tutorials.createDreams);
+router.post("/dreams", tutorials.createDream);
+router.post("/dreams-all", tutorials.createDreams);
 router.get("/dreams", tutorials.findAllDreams);
 router.get("/published-dreams", tutorials.findAllPublishedDreams);
 router.get("/dreams/:id", tutorials.findOneDream);
 router.put("/dreams/:id", tutorials.updateDreams);
 router.delete("/dreams/delete/:ids", tutorials.deleteDream);
-
+router.delete("/d-delete/all", tutorials.deleteDreamsAll);
 
     module.exports = router;

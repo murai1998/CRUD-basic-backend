@@ -82,9 +82,21 @@ useEffect(()=>{
   const handleAllRight = async() => {
     try{
     setGoals(right.concat(left));
-    // let res = await actions.createGoals(left)
+    let res = await actions.createGoals(left)
     setPlans([]);
     let res2 = await actions.deletePlansAll()
+    console.log(res2)
+    } catch(err){
+      console.log(err)
+    }
+  };
+
+  const handleAllRight2 = async() => {
+    try{
+    setDreams(middle.concat(right));
+    let res = await actions.createDreams(right)
+    setGoals([]);
+    let res2 = await actions.deleteGoalsAll()
     console.log(res2)
     } catch(err){
       console.log(err)
@@ -174,10 +186,7 @@ useEffect(()=>{
     setGoals([]);
   };
 //=====================================
-const handleAllRight2 = () => {
-    setDreams(middle.concat(right));
-    setGoals([]);
-  };
+
 
   const handleCheckedRight2 = () => {
     setDreams(middle.concat(rightChecked));

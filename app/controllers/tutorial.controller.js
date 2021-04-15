@@ -331,7 +331,7 @@ let ids_arr = ids.split(',')
 
    //================================Dreams================================
 
-  exports.createDreams = (req, res) => {
+  exports.createDream = (req, res) => {
     console.log(req.body)
      if (!req.body.description) {
        res.status(400).send({
@@ -358,6 +358,36 @@ let ids_arr = ids.split(',')
          });
        });
    };
+
+
+   exports.createDreams = (req, res) => {
+    console.log(req.body)
+     if (!req.body.length > 0) {
+       res.status(400).send({
+         message: "Content can not be empty!"
+       });
+       return;
+     }
+   let arr = []
+    req.body.forEach(x =>{
+      arr.push({description: x.description,
+        published: x.published ? x.published : false})
+    })
+  
+   
+     // Save Tutorial in the database
+     Dreams.bulkCreate(arr)
+       .then(data => {
+         res.send(data);
+       })
+       .catch(err => {
+         res.status(500).send({
+           message:
+             err.message || "Some error occurred while creating the Tutorial."
+         });
+       });
+   };
+
  
    exports.findAllDreams = (req, res) => {
      const description = req.query.description;
@@ -452,3 +482,26 @@ let ids_arr = ids.split(',')
          });
        });
    };
+
+   exports.deleteDreamsAll = (req, res) => {
+    console.log("here")
+  Dreams.destroy({
+      where: { }
+    })
+      .then(num => {
+        if (num == 1) {
+          res.send({
+            message: 'Deleted!'
+          });
+        } else {
+          res.send({
+            message: `Cannot delete Tutorial. Maybe Tutorial was not found!`
+          });
+        }
+      })
+      .catch(err => {
+        res.status(500).send({
+          message: "Could not delete Tutorial" 
+        });
+      });
+  };
