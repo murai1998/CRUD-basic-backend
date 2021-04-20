@@ -103,11 +103,44 @@ useEffect(()=>{
     }
   };
 
-  const handleCheckedRight = () => {
+  const handleCheckedRight = async() => {
+    try{
     setGoals(right.concat(leftChecked));
+    console.log("Goal", leftChecked)
+    let res = await actions.createGoals(leftChecked)
     setPlans(not(left, leftChecked));
+    let ids = [];
+        if(leftChecked.length > 0){
+        leftChecked.map(x=>{
+            ids.push(x.id)
+        })
+        console.log(ids.join(','))
+        let result = await actions.removePlan(ids.join(','));
     setChecked(not(checked, leftChecked));
+      } }catch(err){
+        console.log(err)
+      }
   };
+
+  const handleCheckedRight2 = async() => {
+    try{
+    setDreams(middle.concat(rightChecked));
+    let res = await actions.createDreams(rightChecked)
+    setGoals(not(right, rightChecked));
+    let ids = [];
+        if(rightChecked.length > 0){
+          rightChecked.map(x=>{
+            ids.push(x.id)
+        })
+        console.log(ids.join(','))
+        let result = await actions.removeGoal(ids.join(','));
+    setChecked(not(checked, middleChecked));
+      }
+  }catch(err){
+    console.log(err)
+  }
+  };
+
   const deleteCheckedLeft = async(e) => {
     try{
         e.preventDefault();
@@ -188,11 +221,7 @@ useEffect(()=>{
 //=====================================
 
 
-  const handleCheckedRight2 = () => {
-    setDreams(middle.concat(rightChecked));
-    setGoals(not(right, rightChecked));
-    setChecked(not(checked, rightChecked));
-  };
+
 
   const handleCheckedLeft2 = () => {
     setGoals(right.concat(middleChecked));

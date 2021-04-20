@@ -5,12 +5,14 @@
   
 //===============PLANS======================
     router.post("/plans", tutorials.create);
+    router.post("/plans-all", tutorials.createPlans);
     router.get("/plans", tutorials.findAll);
     router.get("/published-plans", tutorials.findAllPublished);
     router.get("/plans/:id", tutorials.findOne);
     router.put("/plans/:id", tutorials.update);
     router.delete("/plans/delete/:ids", tutorials.delete);
     router.delete("/p-delete/all", tutorials.deletePlansAll);
+    
 //==============================================
 
 

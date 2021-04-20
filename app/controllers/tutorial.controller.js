@@ -327,7 +327,33 @@ let ids_arr = ids.split(',')
       });
   };
 
-
+  exports.createPlans = (req, res) => {
+    console.log(req.body)
+     if (!req.body.length > 0) {
+       res.status(400).send({
+         message: "Content can not be empty!"
+       });
+       return;
+     }
+   let arr = []
+    req.body.forEach(x =>{
+      arr.push({description: x.description,
+        published: x.published ? x.published : false})
+    })
+  
+   
+     // Save Tutorial in the database
+     Plans.bulkCreate(arr)
+       .then(data => {
+         res.send(data);
+       })
+       .catch(err => {
+         res.status(500).send({
+           message:
+             err.message || "Some error occurred while creating the Tutorial."
+         });
+       });
+   };
 
    //================================Dreams================================
 
